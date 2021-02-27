@@ -20,6 +20,7 @@ class task extends JsonResource
             'content' => $this->content,
             'status' => $this->status,
             'the_date' => $this->the_date,
+            'the_day' => $this->the_day,
             'created_at' => $this->created_at->format('d-m-Y h:m:s'),
             'updated_at' => $this->updated_at->format('d-m-Y h:m:s'),
         ];

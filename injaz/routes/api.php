@@ -42,13 +42,15 @@ Route::middleware('auth:api')->group( function() {
     //show tomorrow tasks
     Route::get('tasks/user/tomorrow/{id}', [taskController::class, 'showTomorrowTask']);
 
-    //show tomorrow tasks
-    //Route::get('tasks/user/tomorrow/{id}', [taskController::class, 'showTomorrowTask']);
-
     //convert task to complete
     Route::put('tasks/user/complete/{id}', [taskController::class, 'convertToCompletedTask']);
 
+    //transfer task from today to tomorrow
+    Route::put('tasks/user/trantotom/{id}', [taskController::class, 'transToTomorrow']);
 });
 
     //to sent email
     Route::get('/send-email',  [mailController::class, 'sendEmail']);
+
+    //to sent email to password reset link! -  not yet
+   // Route::get('/password/reset',  [mailController::class, 'sendEmail']);

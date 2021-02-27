@@ -19,6 +19,7 @@ class CreateTasksTable extends Migration
             $table->integer('user_id');
             $table->longText('content');
             $table->dateTime('the_date')->default(Carbon::now());
+            $table->integer('the_day')->default(0); // today = 0 , tomorrow = 1
             $table->integer('status')->default(0); // ongoing = 0 , complete = 1
             $table->timestamps();
         });

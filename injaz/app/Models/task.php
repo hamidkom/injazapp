@@ -16,6 +16,7 @@ class task extends Model
         'content',
         'status',
         'the_date',
+        'the_day',
     ];
 
     public function user()
