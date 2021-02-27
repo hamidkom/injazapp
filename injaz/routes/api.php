@@ -5,6 +5,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers;
 use App\Http\Controllers\API\taskController;
 use App\Http\Controllers\API\RegisterController;
+use App\Http\Controllers\API\mailController;
 use App\Http\Controllers\API\BassController as BassController;
 
 /*
@@ -35,16 +36,19 @@ Route::middleware('auth:api')->group( function() {
     //show spicific task
     Route::get('tasks/user/{id}', [taskController::class, 'showSpecificTask']);
 
-    //show all ongoing tasks
-    Route::get('tasks/user/ongoing/{id}', [taskController::class, 'ongoingTask']);
-
     //show today tasks
     Route::get('tasks/user/today/{id}', [taskController::class, 'showTodayTask']);
 
     //show tomorrow tasks
     Route::get('tasks/user/tomorrow/{id}', [taskController::class, 'showTomorrowTask']);
 
+    //show tomorrow tasks
+    //Route::get('tasks/user/tomorrow/{id}', [taskController::class, 'showTomorrowTask']);
+
     //convert task to complete
     Route::put('tasks/user/complete/{id}', [taskController::class, 'convertToCompletedTask']);
 
 });
+
+    //to sent email
+    Route::get('/send-email',  [mailController::class, 'sendEmail']);

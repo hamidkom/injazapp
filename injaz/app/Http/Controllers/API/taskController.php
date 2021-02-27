@@ -52,6 +52,13 @@ class taskController extends BassController
         return $this->sendResponse(taskResource::collection($task), 'Today Tasks retrieved Successfully!' );
     }
 
+    //use to show tomorrow tasks (not yet)
+    public function showTomorrowTask(task $task)
+    {
+        $task = task::where('user_id' , Auth::id())->whereDate('the_date', '=',  Carbon::tomorrow()->toDateString())->get();
+        return $this->sendResponse(taskResource::collection($task), 'Tomorrow Tasks retrieved Successfully!' );
+    }
+
 
     //to show specific task (postman linked)
     public function showSpecificTask($id)
@@ -131,45 +138,5 @@ class taskController extends BassController
         $task->delete();
         return $this->sendResponse(new taskResource($task), 'Task deleted successfully');
     }
-
-//-----------------------[   Not yet    ]--------------------------------------------------
-
-
-    //transfer ongoing task to tomorow (not yet)
-    public function tasksToTomorrow($id, request $request)
-    {
-        $task = task::find($id);
-
-        if (is_null($task))
-        {
-            return $this->sendError('Task not found.');
-        }
-
-        $errorMessage = [] ;
-
-        if ( $task->user_id != Auth::id())
-        {
-            return $this->sendError('you dont have rights' , $errorMessage);
-        }
-
-        /*
-        DB::table('tasks')->where('status', 0)->where('the_day', 0)->update([
-            'the_day' => 1,
-        ]);
-        */
-            return $this->sendResponse(new taskResource($task), 'Task is postponed for tomorrow');
-    }
-
-
-      //use to show tomorrow tasks (not yet)
-      public function showTomorrowTask(task $task)
-      {
-          $today_start = Carbon::now()->format('d-m-Y 00:00:00');
-          $today_end = Carbon::now()->format('d-m-Y 23:59:59');
-
-          $task = task::where('user_id' , Auth::id())->whereBetween('created_at', [$today_start, $today_end])->where('status', 0)->get();
-
-          return $this->sendResponse(taskResource::collection($task), 'Tomorrow Tasks retrieved Successfully!' );
-      }
-
 }
+
