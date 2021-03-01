@@ -7,6 +7,8 @@ use App\Http\Controllers\API\taskController;
 use App\Http\Controllers\API\RegisterController;
 use App\Http\Controllers\API\mailController;
 use App\Http\Controllers\API\BassController as BassController;
+use App\Http\Controllers\API\ResetPasswordController;
+use App\Http\Controllers\API\ForgotPasswordController;
 
 /*
 |--------------------------------------------------------------------------
@@ -26,6 +28,12 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 
 Route::post('register', [RegisterController::class, 'register']);
 Route::post('login', [RegisterController::class, 'login']);
+
+//Route::post('/password/email', 'API\ForgotPasswordController@sendResetLinkEmail');
+//Route::post('/password/reset', 'API\ResetPasswordController@reset');
+
+Route::post('/password/email', [ForgotPasswordController::class, 'sendResetLinkEmail']);
+Route::post('/password/reset', [ResetPasswordController::class, 'reset']);
 
 Route::middleware('auth:api')->group( function() {
     Route::resource('task', 'API\taskController');
@@ -51,6 +59,3 @@ Route::middleware('auth:api')->group( function() {
 
     //to sent email
     Route::get('/send-email',  [mailController::class, 'sendEmail']);
-
-    //to sent email to password reset link! -  not yet
-   // Route::get('/password/reset',  [mailController::class, 'sendEmail']);
