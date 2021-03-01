@@ -27,6 +27,7 @@ class taskController extends BassController
 
     //create and store tasks (all will be ongoing tasks by default) //for today by default
     //(postman linked)
+    //create Today task
     public function store(Request $request)
     {
         $input = $request->all();
@@ -42,6 +43,35 @@ class taskController extends BassController
         $input['user_id'] = $user->id;
 
         $task = task::create($input);
+        //اضافة
+        $task->the_date = Carbon::parse(now())->toDateString();
+        $task->save();
+
+        return $this->sendResponse(new taskResource($task), 'Task Created successfully');
+    }
+
+    //create Tomorrow task
+    public function createTomorrowTask(Request $request)
+    {
+        $input = $request->all();
+        $validator = validator::make($input, [
+            'content' => 'required',
+        ]);
+
+        if ($validator->fails()) {
+            return $this->sendError('All fields are required', $validator->errors());
+        }
+
+        $user = Auth::user();
+        $input['user_id'] = $user->id;
+
+        $task = task::create($input);
+        //اضافة
+       // $task->the_date = Carbon::parse(carbon::tomorrow());
+        $task->the_date = carbon::tomorrow()->toDateString();
+        $task->the_day = 1;
+        $task->save();
+
         return $this->sendResponse(new taskResource($task), 'Task Created successfully');
     }
 

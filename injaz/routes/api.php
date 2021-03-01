@@ -38,6 +38,9 @@ Route::post('/password/reset', [ResetPasswordController::class, 'reset']);
 Route::middleware('auth:api')->group( function() {
     Route::resource('task', 'API\taskController');
 
+    //create tomorrow tasks
+    Route::post('tasks/create_tomorrow', [taskController::class, 'createTomorrowTask']);
+
     //Show All Tasks for the User
     Route::get('tasks/user/all', [taskController::class, 'userTask']);
 

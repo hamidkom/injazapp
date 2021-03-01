@@ -34,6 +34,12 @@ class User extends Authenticatable
         'remember_token',
     ];
 
+    protected $date = [
+        'created_at',
+        'updated_at',
+        'the_date',
+    ];
+
     /**
      * The attributes that should be cast to native types.
      *
